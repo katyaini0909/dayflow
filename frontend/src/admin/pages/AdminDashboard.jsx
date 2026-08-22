@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import "../AdminDashboard.css";
 import AnimatedNumber from "../components/AnimatedNumber";
 import Reveal from "../components/Reveal";
@@ -42,11 +43,25 @@ function AdminDashboard() {
 
         <nav>
           <ul>
-            <li>Dashboard</li>
-            <li>Employees</li>
-            <li>Attendance</li>
-            <li>Leave Requests</li>
-            <li>Payroll</li>
+            <li>
+  <Link to="/admin/dashboard">Dashboard</Link>
+</li>
+
+<li>
+  <Link to="/admin/employees">Employees</Link>
+</li>
+
+<li>
+  <Link to="/admin/attendance">Attendance</Link>
+</li>
+
+<li>
+  <Link to="/admin/leave">Leave Requests</Link>
+</li>
+
+<li>
+  <Link to="/admin/payroll">Payroll</Link>
+</li>
           </ul>
         </nav>
       </aside>
