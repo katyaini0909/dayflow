@@ -1,5 +1,7 @@
 import { useState } from "react";
 import "../AdminDashboard.css";
+import AnimatedNumber from "../components/AnimatedNumber";
+import Reveal from "../components/Reveal";
 const employees = [
   {
     id: 1,
@@ -63,29 +65,31 @@ function AdminDashboard() {
         </header>
 
         {/* Summary Cards */}
+        <reveal>
         <section className="summary-cards">
           <div className="summary-card">
             <h3>Total Employees</h3>
-            <p>42</p>
+            <p><AnimatedNumber value={42} /></p>
           </div>
 
           <div className="summary-card">
             <h3>Present Today</h3>
-            <p>38</p>
+            <p><AnimatedNumber value={38} /></p>
           </div>
 
           <div className="summary-card">
             <h3>On Leave</h3>
-            <p>4</p>
+            <p><AnimatedNumber value={4} /></p>
           </div>
 
           <div className="summary-card">
             <h3>Pending Requests</h3>
-            <p>7</p>
+            <p><AnimatedNumber value={7} /></p>
           </div>
         </section>
-
+        </reveal>
         {/* Employee Section */}
+        <reveal>
         <section className="dashboard-section">
   <div className="section-header">
     <h2>Employees</h2>
@@ -151,8 +155,10 @@ function AdminDashboard() {
   </p>
 </div>
 </section>
+</reveal>
 
         {/* Attendance Section */}
+        <reveal>
         <section className="dashboard-section">
           <div className="section-header">
             <h2>Attendance</h2>
@@ -161,8 +167,10 @@ function AdminDashboard() {
 
           <p>Attendance records will appear here.</p>
         </section>
+        </reveal>
 
         {/* Leave Requests Section */}
+        <reveal>
         <section className="dashboard-section">
           <div className="section-header">
             <h2>Leave Requests</h2>
@@ -171,6 +179,7 @@ function AdminDashboard() {
 
           <p>Leave approval requests will appear here.</p>
         </section>
+        </reveal>
       </main>
     </div>
   );

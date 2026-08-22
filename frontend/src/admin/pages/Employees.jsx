@@ -1,38 +1,56 @@
+import { useEffect, useState } from "react";
+
 function Employees() {
-  const employees = [
-    {
-      id: 1,
-      name: "Rahul Sharma",
-      role: "Software Engineer",
-      department: "Engineering",
-      email: "rahul@dayflow.com",
-      status: "Active",
-    },
-    {
-      id: 2,
-      name: "Priya Singh",
-      role: "UI/UX Designer",
-      department: "Design",
-      email: "priya@dayflow.com",
-      status: "Active",
-    },
-    {
-      id: 3,
-      name: "Arjun Mehta",
-      role: "HR Executive",
-      department: "Human Resources",
-      email: "arjun@dayflow.com",
-      status: "On Leave",
-    },
-    {
-      id: 4,
-      name: "Ananya Gupta",
-      role: "Frontend Developer",
-      department: "Engineering",
-      email: "ananya@dayflow.com",
-      status: "Active",
-    },
-  ];
+  const [employees, setEmployees] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const fetchEmployees = async () => {
+      try {
+        const token = localStorage.getItem("token");
+
+        const response = await fetch(
+          "http://localhost:5000/api/admin/employees",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message || "Failed to fetch employees");
+        }
+
+        setEmployees(data.employees);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEmployees();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="attendance-page">
+        Loading employees...
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="attendance-page">
+        Error: {error}
+      </div>
+    );
+  }
 
   return (
     <div className="attendance-page">
@@ -54,32 +72,20 @@ function Employees() {
         <table className="attendance-table">
           <thead>
             <tr>
+              <th>Employee ID</th>
               <th>Name</th>
-              <th>Role</th>
-              <th>Department</th>
               <th>Email</th>
-              <th>Status</th>
+              <th>Role</th>
             </tr>
           </thead>
 
           <tbody>
             {employees.map((employee) => (
-              <tr key={employee.id}>
+              <tr key={employee._id}>
+                <td>{employee.employeeId}</td>
                 <td>{employee.name}</td>
-                <td>{employee.role}</td>
-                <td>{employee.department}</td>
                 <td>{employee.email}</td>
-                <td>
-                  <span
-                    className={
-                      employee.status === "Active"
-                        ? "status present"
-                        : "status leave"
-                    }
-                  >
-                    {employee.status}
-                  </span>
-                </td>
+                <td>{employee.role}</td>
               </tr>
             ))}
           </tbody>

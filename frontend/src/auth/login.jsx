@@ -31,7 +31,11 @@ function Login() {
 
       setMessage("Login successful!");
 
-      window.location.href = "/employee/dashboard";
+      if (data.user.role === "admin") {
+  window.location.href = "/admin/dashboard";
+} else {
+  window.location.href = "/employee/dashboard";
+}
     } catch (error) {
       setMessage("Unable to connect to server");
     }
